@@ -1,25 +1,45 @@
 #include "WeightedGraph.h"
-#include <iostream>
-#include <queue>
 
 WeightedGraph::WeightedGraph(int n, bool isDirected) : Graph(n, isDirected){
     adjList.resize(n);
 }
 
 void WeightedGraph::addEdge(int v1, int v2, int weight){
-    adjList[v1].push_back({v2, weight});
-    edges.push_back({v1, v2, weight});
+    adjList[v1-1].push_back({weight, v2-1});
+    edges.push_back({weight, v1, v2});
 
-    if(!isDirected) adjList[v2].push_back({v1, weight});
+    if(!isDirected) adjList[v2-1].push_back({weight, v1-1});
+}
+
+void WeightedGraph::addEdge(std::tuple<int, int, int> edge){
+    edges.push_back(edge);
+    int v1 = std::get<1>(edge);
+    int v2 = std::get<2>(edge);
+    int weight = std::get<0>(edge);
+
+    adjList[v1-1].push_back({weight, v2-1});
+    if(!isDirected) adjList[v2-1].push_back({weight, v1-1});
+}
+
+int WeightedGraph::getN(){
+    return visited.size();
+}
+
+std::vector<std::tuple<int, int, int>> WeightedGraph::getEdges(){
+    return edges;
+}
+
+std::vector<std::vector<std::pair<int, int>>> WeightedGraph::getAdjList(){
+    return adjList;
 }
 
 void WeightedGraph::dfsRec(int v, int &cnt){
     visited[v] = cnt++;
 
-    std::cout << v << std::endl;
+    std::cout << v+1 << std::endl;
 
     for(auto u : adjList[v]){
-        if(visited[u.first] == -1) dfsRec(u.first, cnt);
+        if(visited[u.second] == -1) dfsRec(u.second, cnt);
     }
 }
 
@@ -34,6 +54,8 @@ void WeightedGraph::dfs(){
 }
 
 void WeightedGraph::bfs(int v0){
+    v0 -= 1;
+
     std::fill(visited.begin(), visited.end(), -1);
 
     std::queue<int> f;
@@ -48,12 +70,12 @@ void WeightedGraph::bfs(int v0){
         int v = f.front();
         f.pop();
 
-        std::cout << v << std::endl;
+        std::cout << v+1 << std::endl;
 
         for(auto u : adjList[v]){
-            if(visited[u.first] == -1){
-                visited[u.first] = cnt++;
-                f.push(u.first);
+            if(visited[u.second] == -1){
+                visited[u.second] = cnt++;
+                f.push(u.second);
             }
         }
     }
