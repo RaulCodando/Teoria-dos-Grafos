@@ -16,6 +16,12 @@ public:
 
     void addEdge(int v1, int v2);
 
+    int getN();
+
+    std::vector<std::pair<int, int>> getEdges();
+
+    std::vector<std::vector<int>> getAdjList();
+
     void dfsRec(int v, int &cnt) override;
 
     void dfs() override;
