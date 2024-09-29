@@ -7,16 +7,28 @@ UnweightedGraph::UnweightedGraph(int n, bool isDirected) : Graph(n, isDirected){
 }
 
 void UnweightedGraph::addEdge(int v1, int v2){
-    adjList[v1].push_back(v2);
+    adjList[v1-1].push_back(v2-1);
     edges.push_back({v1, v2});
 
-    if(!isDirected) adjList[v2].push_back(v1);
+    if(!isDirected) adjList[v2-1].push_back(v1-1);
+}
+
+int UnweightedGraph::getN(){
+    return visited.size();
+}
+
+std::vector<std::pair<int, int>> UnweightedGraph::getEdges(){
+    return edges;
+}
+
+std::vector<std::vector<int>> UnweightedGraph::getAdjList(){
+    return adjList;
 }
 
 void UnweightedGraph::dfsRec(int v, int &cnt){
     visited[v] = cnt++;
 
-    std::cout << v << std::endl;
+    std::cout << v+1 << std::endl;
 
     for(auto u : adjList[v]){
         if(visited[u] == -1) dfsRec(u, cnt);
@@ -34,6 +46,8 @@ void UnweightedGraph::dfs(){
 }
 
 void UnweightedGraph::bfs(int v0){
+    v0 -= 1;
+    
     std::fill(visited.begin(), visited.end(), -1);
 
     std::queue<int> f;
@@ -48,7 +62,7 @@ void UnweightedGraph::bfs(int v0){
         int v = f.front();
         f.pop();
 
-        std::cout << v << std::endl;
+        std::cout << v+1 << std::endl;
 
         for(auto u : adjList[v]){
             if(visited[u] == -1){
