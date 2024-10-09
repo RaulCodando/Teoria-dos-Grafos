@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    oFile.close();
+    if(out && oFile.is_open()) oFile.close();
     file.close();
     return 0;
 }
