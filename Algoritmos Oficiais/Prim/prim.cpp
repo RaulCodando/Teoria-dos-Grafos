@@ -143,7 +143,7 @@ int main(int argc, char *argv[]){
         else cout << result.cost;
     }
 
-    oFile.close();
+    if(out && oFile.is_open()) oFile.close();
     file.close();
 
     return 0;
