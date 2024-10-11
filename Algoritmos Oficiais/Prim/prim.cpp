@@ -43,9 +43,11 @@ Output prim(Graph g, int v0){
     int sum = 0;
     vector<vertex> edges;
 
-    for(int i = 1; i < n; i++){
-        sum += cost[i];
-        edges.push_back({parent[i]+1, i+1});
+    for(int i = 0; i < n; i++){
+        if(i+1 != v0){
+            sum += cost[i];
+            edges.push_back({parent[i]+1, i+1});
+        }
     }
 
     edges.shrink_to_fit();
@@ -66,7 +68,7 @@ void help(){
 }
 
 int main(int argc, char *argv[]){
-    int v0;
+    int v0 = 1;
     string inputFile;
     string outputFile;
     bool show = false;
