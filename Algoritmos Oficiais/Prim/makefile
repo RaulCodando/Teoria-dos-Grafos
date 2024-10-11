@@ -1,5 +1,5 @@
 prim: prim.o Graph.o
-	g++ prim.o Graph.o -o prim
+	g++ prim.o Graph.o -o prim.bin
 
 prim.o: prim.cpp
 	g++ -c prim.cpp
