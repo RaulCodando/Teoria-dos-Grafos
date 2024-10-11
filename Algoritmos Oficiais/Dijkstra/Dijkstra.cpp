@@ -11,7 +11,6 @@ vector<int> dijkstra(Graph g, int v0){
     int n = g.getN();
     using vertex = pair<int, int>;
     vector<vector<vertex>> adjList = g.getAdjList();
-    vector<bool> visited(n, false);
     vector<int> dist(n, INT_MAX);
     vector<int> prev(n, -1);
     priority_queue<vertex, vector<vertex>, greater<vertex>> h;
@@ -24,10 +23,8 @@ vector<int> dijkstra(Graph g, int v0){
         vertex u = h.top();
         h.pop();
 
-        visited[u.second] = true;
-
         for(auto v: adjList[u.second]){
-            if(!visited[v.second] && dist[v.second] > dist[u.second] + v.first){
+            if(dist[v.second] > dist[u.second] + v.first){
                 dist[v.second] = dist[u.second] + v.first;
                 prev[v.second] = u.second;
                 h.push(v);
@@ -46,7 +43,7 @@ void help(){
 }
 
 int main(int argc, char *argv[]){
-    int v0;
+    int v0 = 1;
     string inputFile;
     string outputFile;
     bool out = false;
@@ -103,6 +100,8 @@ int main(int argc, char *argv[]){
     vector<int> output = dijkstra(g, v0);
 
     for(int i = 0; i < output.size(); i++){
+        if(output[i] == INT_MAX) output[i] = -1;
+        
         if(out){
             oFile << i+1 << ":" << output[i] << " ";
         }
@@ -113,5 +112,6 @@ int main(int argc, char *argv[]){
 
     if(out && oFile.is_open()) oFile.close();
     file.close();
+
     return 0;
 }
