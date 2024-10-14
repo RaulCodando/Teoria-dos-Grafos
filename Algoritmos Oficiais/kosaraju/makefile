@@ -8,4 +8,4 @@ kosaraheader.o: kosaraheader.cpp
 				g++ -c kosaraheader.cpp
 
 clean:
-		rm *.o kosaraju
+		rm *.o kosaraju.bin
