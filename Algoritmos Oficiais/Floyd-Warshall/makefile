@@ -9,3 +9,5 @@ Graph.o: Graph.cpp
 
 clean:
 	rm *.o floyd-warshall.bin
+run:
+./floyd-warshall.bin
