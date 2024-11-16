@@ -59,6 +59,7 @@ int main(int argc, char *argv[]){
         }
         else if(arg == "-h"){
             help();
+            return 0;
         }
         else if(arg == "-o" && i + 1 < argc){
             outputFile = argv[++i];
